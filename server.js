@@ -1,7 +1,15 @@
 import { Server } from "socket.io"
 
 const DEBUG = true;
-const server = new Server()
+
+let conf = {
+	cors: {
+		origin: "https://82.65.243.105:3000",
+		methods: ["GET", "POST"]
+	}
+}
+
+const server = new Server(conf)
 
 let streams = {}
 let id_cpt = 0;
@@ -14,7 +22,7 @@ function log(obj) {
 
 server.on("connection", socket => {
 
-	log("Connection !")
+	log(`Connection of ${socket.id}!`)
 
 	socket.on("start_stream", (title) => {
 		log(`${socket.id} starting new stream ${title} with id ${id_cpt}`)
